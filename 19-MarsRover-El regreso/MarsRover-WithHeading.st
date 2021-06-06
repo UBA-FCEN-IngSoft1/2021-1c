@@ -1,67 +1,42 @@
-!classDefinition: #MarsRoverTest category: #'MarsRover-WithHeading'!
+!classDefinition: #MarsRoverTest category: 'MarsRover-WithHeading'!
 TestCase subclass: #MarsRoverTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'MarsRover-WithHeading'!
 
-!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 7/1/2018 14:23:26'!
-test01
+!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 6/5/2021 22:09:07'!
+test01DoesNotMoveWhenNoCommandToProcess
 
-	| marsRover |
-	
-	marsRover := MarsRover at: 1@2 heading: #North.
-	
-	marsRover process: ''.
-	
-	self assert: (marsRover isAt: 1@2 heading: #North)! !
+	self assertWhenStartingAt: 1@2 heading: #North shouldEndAt: 1@2 heading: #North afterProcessing: ''.
+! !
 
-!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 7/1/2018 14:23:31'!
-test02
+!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 6/5/2021 22:14:26'!
+test02MovesForwardWhenHeadingNorth
 
-	| marsRover |
-	
-	marsRover := MarsRover at: 1@2 heading: #North.
-	
-	marsRover process: 'f'.
-	
-	self assert: (marsRover isAt: 1@3 heading: #North)! !
+	self assertWhenStartingAt: 1@2 heading: #North shouldEndAt: 1@3 heading: #North afterProcessing: 'f'.
 
-!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 7/1/2018 14:23:34'!
-test03
+	! !
 
-	| marsRover |
-	
-	marsRover := MarsRover at: 1@2 heading: #North.
-	
-	marsRover process: 'b'.
-	
-	self assert: (marsRover isAt: 1@1 heading: #North)! !
+!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 6/5/2021 22:14:33'!
+test03MovesBackwardWhenHeadingNorth
 
-!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 7/1/2018 14:23:38'!
-test04
+	self assertWhenStartingAt: 1@2 heading: #North shouldEndAt: 1@1 heading: #North afterProcessing: 'b'.! !
 
-	| marsRover |
-	
-	marsRover := MarsRover at: 1@2 heading: #North.
-	
-	marsRover process: 'r'.
-	
-	self assert: (marsRover isAt: 1@2 heading: #East)! !
+!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 6/5/2021 22:15:55'!
+test04HeadsToEastWhenRotatingRightFromNorth
 
-!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 7/1/2018 14:23:45'!
-test05
+	self assertWhenStartingAt: 1@2 heading: #North shouldEndAt: 1@2 heading: #East afterProcessing: 'r'.
+! !
 
-	| marsRover |
-	
-	marsRover := MarsRover at: 1@2 heading: #North.
-	
-	marsRover process: 'l'.
-	
-	self assert: (marsRover isAt: 1@2 heading: #West)! !
+!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 6/5/2021 22:16:03'!
+test05HeadsToWestWhenRotatingLeftFromNorth
 
-!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 7/1/2018 14:23:50'!
-test06
+	self assertWhenStartingAt: 1@2 heading: #North shouldEndAt: 1@2 heading: #West afterProcessing: 'l'.
+	! !
+
+!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 6/5/2021 22:11:24'!
+test06DoesNotProcessInvalidCommands
 
 	| marsRover |
 	
@@ -74,107 +49,62 @@ test06
 			self assert: anError messageText equals: marsRover invalidCommandErrorDescription.
 			self assert: (marsRover isAt: 1@2 heading: #North) ]! !
 
-!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 7/1/2018 14:23:54'!
-test07
+!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 6/5/2021 22:11:48'!
+test07ProcessesMoreThanOneCommand
 
-	| marsRover |
-	
-	marsRover := MarsRover at: 1@2 heading: #North.
-	
-	marsRover process: 'ff'.
-	
-	self assert: (marsRover isAt: 1@4 heading: #North)! !
+	self assertWhenStartingAt: 1@2 heading: #North shouldEndAt: 1@4 heading: #North afterProcessing: 'ff'.
+! !
 
-!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 7/1/2018 14:23:59'!
-test08
+!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 6/5/2021 22:14:55'!
+test08MovesForwardWhenHeadingEast
 
-	| marsRover |
-	
-	marsRover := MarsRover at: 1@2 heading: #East.
-	
-	marsRover process: 'f'.
-	
-	self assert: (marsRover isAt: 2@2 heading: #East)! !
+	self assertWhenStartingAt: 1@2 heading: #East shouldEndAt: 2@2 heading: #East afterProcessing: 'f'.
+! !
 
-!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 7/1/2018 14:24:06'!
-test09
+!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 6/5/2021 22:15:05'!
+test09MovesBackwardsWhenHeadingEast
 
-	| marsRover |
-	
-	marsRover := MarsRover at: 1@2 heading: #East.
-	
-	marsRover process: 'b'.
-	
-	self assert: (marsRover isAt: 0@2 heading: #East)! !
+	self assertWhenStartingAt: 1@2 heading: #East shouldEndAt: 0@2 heading: #East afterProcessing: 'b'.
+! !
 
-!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 7/1/2018 14:24:12'!
-test10
+!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 6/5/2021 22:16:14'!
+test10HeadsToSouthWhenRotatingRightFromEast
 
-	| marsRover |
-	
-	marsRover := MarsRover at: 1@2 heading: #East.
-	
-	marsRover process: 'r'.
-	
-	self assert: (marsRover isAt: 1@2 heading: #South)! !
+	self assertWhenStartingAt: 1@2 heading: #East shouldEndAt: 1@2 heading: #South afterProcessing: 'r'.
+! !
 
-!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 7/1/2018 14:24:20'!
-test11
+!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 6/5/2021 22:16:22'!
+test11HeadsToNorthWhenRotatingLeftFromEast
 
-	| marsRover |
-	
-	marsRover := MarsRover at: 1@2 heading: #East.
-	
-	marsRover process: 'l'.
-	
-	self assert: (marsRover isAt: 1@2 heading: #North)! !
+	self assertWhenStartingAt: 1@2 heading: #East shouldEndAt: 1@2 heading: #North afterProcessing: 'l'.
+! !
 
-!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 7/1/2018 14:24:25'!
-test12
+!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 6/5/2021 22:14:12'!
+test12ProcessCommandsWhenHeadingSouth
 
-	| marsRover |
-	
-	marsRover := MarsRover at: 1@2 heading: #South.
-	
-	marsRover process: 'ffbr'.
-	
-	self assert: (marsRover isAt: 1@1 heading: #West)! !
+	self assertWhenStartingAt: 1@2 heading: #South shouldEndAt: 1@1 heading: #West afterProcessing: 'ffbr'.
+	! !
 
-!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 7/1/2018 14:24:29'!
-test13
+!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 6/5/2021 22:15:41'!
+test13HeadsEastWhenRotatingLeftFromSouth
 
-	| marsRover |
-	
-	marsRover := MarsRover at: 1@2 heading: #South.
-	
-	marsRover process: 'l'.
-	
-	self assert: (marsRover isAt: 1@2 heading: #East)! !
+	self assertWhenStartingAt: 1@2 heading: #South shouldEndAt: 1@2 heading: #East afterProcessing: 'l'.
+! !
 
-!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 7/1/2018 14:24:33'!
-test14
+!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 6/5/2021 22:16:52'!
+test14ProcessCommandsWhenHeadingWest
 
-	| marsRover |
-	
-	marsRover := MarsRover at: 1@2 heading: #West.
-	
-	marsRover process: 'ffbr'.
-	
-	self assert: (marsRover isAt: 0@2 heading: #North)! !
+	self assertWhenStartingAt: 1@2 heading: #West shouldEndAt: 0@2 heading: #North afterProcessing: 'ffbr'.
+	! !
 
-!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 7/1/2018 14:24:37'!
-test15
+!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 6/5/2021 22:17:28'!
+test15HeadsSouthWhenRotatingLeftFromWest
 
-	| marsRover |
-	
-	marsRover := MarsRover at: 1@2 heading: #West.
-	
-	marsRover process: 'l'.
-	
-	self assert: (marsRover isAt: 1@2 heading: #South)! !
+	self assertWhenStartingAt: 1@2 heading: #West shouldEndAt: 1@2 heading: #South afterProcessing: 'l'.
+! !
 
-!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 7/2/2018 16:27:43'!
-test16
+!MarsRoverTest methodsFor: 'tests' stamp: 'HAW 6/5/2021 22:18:04'!
+test16CanNotCreateMarsRoverWithInvalidCardinalPoint
 
 	self 
 		should: [MarsRover at: 1@2 heading: #X ]
@@ -182,8 +112,24 @@ test16
 		withExceptionDo: [:anError |
 			self assert: MarsRover invalidCardinalPointErrorDescription equals: anError messageText ]! !
 
+
+!MarsRoverTest methodsFor: 'assertions' stamp: 'HAW 6/5/2021 19:47:28'!
+assertWhenStartingAt: startPosition 
+	heading: startCardinalPoint 
+	shouldEndAt: endPosition 
+	heading: enCardinalPoint 
+	afterProcessing: commands
+	
+	| marsRover |
+	
+	marsRover := MarsRover at: startPosition heading: startCardinalPoint.
+	
+	marsRover process: commands.
+	
+	self assert: (marsRover isAt: endPosition heading: enCardinalPoint)! !
+
 
-!classDefinition: #MarsRover category: #'MarsRover-WithHeading'!
+!classDefinition: #MarsRover category: 'MarsRover-WithHeading'!
 Object subclass: #MarsRover
 	instanceVariableNames: 'position head'
 	classVariableNames: ''
@@ -314,7 +260,7 @@ processCommand: aCommand
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'MarsRover class' category: #'MarsRover-WithHeading'!
+!classDefinition: 'MarsRover class' category: 'MarsRover-WithHeading'!
 MarsRover class
 	instanceVariableNames: 'headings'!
 
@@ -329,7 +275,7 @@ invalidCardinalPointErrorDescription
 	^'Invalid cardinal point'! !
 
 
-!classDefinition: #MarsRoverHeading category: #'MarsRover-WithHeading'!
+!classDefinition: #MarsRoverHeading category: 'MarsRover-WithHeading'!
 Object subclass: #MarsRoverHeading
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -365,7 +311,7 @@ moveForward: aMarsRover
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'MarsRoverHeading class' category: #'MarsRover-WithHeading'!
+!classDefinition: 'MarsRoverHeading class' category: 'MarsRover-WithHeading'!
 MarsRoverHeading class
 	instanceVariableNames: ''!
 
@@ -390,7 +336,7 @@ isFor: aCardinalPoint
 	^self cardinalPoint = aCardinalPoint ! !
 
 
-!classDefinition: #MarsRoverHeadingEast category: #'MarsRover-WithHeading'!
+!classDefinition: #MarsRoverHeadingEast category: 'MarsRover-WithHeading'!
 MarsRoverHeading subclass: #MarsRoverHeadingEast
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -420,7 +366,7 @@ rotateRight: aMarsRover
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'MarsRoverHeadingEast class' category: #'MarsRover-WithHeading'!
+!classDefinition: 'MarsRoverHeadingEast class' category: 'MarsRover-WithHeading'!
 MarsRoverHeadingEast class
 	instanceVariableNames: ''!
 
@@ -430,7 +376,7 @@ cardinalPoint
 	^#East! !
 
 
-!classDefinition: #MarsRoverHeadingNorth category: #'MarsRover-WithHeading'!
+!classDefinition: #MarsRoverHeadingNorth category: 'MarsRover-WithHeading'!
 MarsRoverHeading subclass: #MarsRoverHeadingNorth
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -460,7 +406,7 @@ rotateRight: aMarsRover
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'MarsRoverHeadingNorth class' category: #'MarsRover-WithHeading'!
+!classDefinition: 'MarsRoverHeadingNorth class' category: 'MarsRover-WithHeading'!
 MarsRoverHeadingNorth class
 	instanceVariableNames: ''!
 
@@ -470,7 +416,7 @@ cardinalPoint
 	^#North! !
 
 
-!classDefinition: #MarsRoverHeadingSouth category: #'MarsRover-WithHeading'!
+!classDefinition: #MarsRoverHeadingSouth category: 'MarsRover-WithHeading'!
 MarsRoverHeading subclass: #MarsRoverHeadingSouth
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -500,7 +446,7 @@ rotateRight: aMarsRover
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'MarsRoverHeadingSouth class' category: #'MarsRover-WithHeading'!
+!classDefinition: 'MarsRoverHeadingSouth class' category: 'MarsRover-WithHeading'!
 MarsRoverHeadingSouth class
 	instanceVariableNames: ''!
 
@@ -510,7 +456,7 @@ cardinalPoint
 	^#South! !
 
 
-!classDefinition: #MarsRoverHeadingWest category: #'MarsRover-WithHeading'!
+!classDefinition: #MarsRoverHeadingWest category: 'MarsRover-WithHeading'!
 MarsRoverHeading subclass: #MarsRoverHeadingWest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -540,7 +486,7 @@ rotateRight: aMarsRover
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'MarsRoverHeadingWest class' category: #'MarsRover-WithHeading'!
+!classDefinition: 'MarsRoverHeadingWest class' category: 'MarsRover-WithHeading'!
 MarsRoverHeadingWest class
 	instanceVariableNames: ''!
 
